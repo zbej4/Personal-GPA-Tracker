@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Project_3___Personal_GPA_Tracker.Models.Course>
+
+<table class="table">
+    @{ 
+        double totalQuality = 0.0;
+        var totalHours = 0;
+        string format = "0.0";
+    }
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreditHours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseGrade)
+        </th>
+        <th>
+            Quality Points
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var qualityPoints = (item.CreditHours * item.Grade.GradePoints);
+        totalQuality += qualityPoints;
+        totalHours += item.CreditHours;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseGrade) [@item.Grade.GradePoints.ToString(@format)]
+            </td>
+            <td>
+                @qualityPoints.ToString(@format)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditCourse", new { id = item.CourseCode }, new { @class = "editCourseLink", data_toggle="modal", data_target="editCourseModal" }) |
+                @Html.ActionLink("Delete", "DeleteCourse", new { id = item.CourseCode }, new { @class = "deleteCourseLink", data_toggle="modal", data_target="deleteCourseModal" })
+            </td>
+        </tr>
+    }
+</table>
+<div class="row">
+    <div class="col-sm-2">
+        <h4>Current GPA:</h4>
+    </div>
+    <div class="col-sm-10">
+        @{ var currentGPA = totalQuality / totalHours; }
+        <h4>@currentGPA.ToString(@format)</h4>
+    </div>
+    <input type="hidden" name="previousHours" id="previousHours" value="@totalHours" />
+    <input type="hidden" name="previousQuality" id="previousQuality" value="@totalQuality" />
+</div>
+<!--Has to be placed here for edit/delete options to work after the first submission on page-->
+<script src="~/Scripts/courseMain.js"></script>

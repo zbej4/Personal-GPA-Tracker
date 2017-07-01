@@ -1,0 +1,57 @@
+﻿@model Project_3___Personal_GPA_Tracker.Models.Course
+
+<div id="mainContent" class="modal-content col-sm-12">
+@using (Html.BeginForm("DeleteCourse","Home",FormMethod.Post,new { id = "formDeleteCourse" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="deleteCourseLabel">Delete Course: @Model.CourseCode</h4>
+    </div>
+    <div class="modal-body">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseCode):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseCode)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseTitle):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditHours):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditHours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade.LetterGrade):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grade.LetterGrade)
+        </dd>
+    </dl>
+
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" name="CourseCode" id="CourseCode" value="@Model.CourseCode" />
+        <button type="submit" value="Delete" class="btn btn-primary" id="deleteBtn" data-dismiss"modal">Delete</button>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Close">Cancel</button>
+    </div>
+    }
+    <!--Has to be placed here for submission to work since modal is not populated until delete option selected-->
+    <script src="~/Scripts/deleteCourseForm.js"></script>
+</div>

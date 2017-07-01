@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Project_3___Personal_GPA_Tracker.Models.Course>
+
+@{
+    ViewBag.Title = "Grade Point Average";
+    var grades = ViewBag.Grades;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Add Course",
+    "#", null,
+    new
+    {
+        href = "#",
+        id = "createCourseLink",
+        data_toggle = "modal",
+        data_target = "#createCourseModal"
+    })
+</p>
+<div id="courseList">
+    @Html.Partial("_CourseList", Model)
+</div>
+
+@Html.Partial("_CreateCourse")
+
+<div class="modal fade" id="editCourseModal" tabindex="-1" role="dialog"
+     aria-labelledby="editCourseLabel" aria-hidden="true">
+    <div class="modal-dialog" id="editCourseContainer"></div>
+</div>
+
+<div class="modal fade" id="deleteCourseModal" tabindex="-1" role="dialog"
+     aria-labelledby="deleteCourseLabel" aria-hidden="true">
+    <div class="modal-dialog" id="deleteCourseContainer"></div>
+</div>
+<hr />
+<h5>Calculate GPA needed:</h5>
+<form id="futureGPAForm" class="form-horizontal" method="post" action="@Url.Action("CalculateGPA")">
+    <div class="form-group">
+        <label for="currentCreditHours" class="col-sm-3 control-label">Credit Hours this semester:</label>
+        <div class="col-sm-9">
+            <input type="number" name="currentCreditHours" id="currentCreditHours" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="desiredGPA" class="col-sm-3 control-label">Desired GPA:</label>
+        <div class="col-sm-9">
+            <input type="text" name="desiredGPA" id="desiredGPA" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" id="gpaBtn">Calculate</button>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-sm-3"><h4>GPA needed this semester:</h4></div>
+    <div class="col-sm-9"><h4 id="futureOutput"></h4></div>
+</div>
+@section Scripts
+{
+<script src="~/Scripts/clockMain.js"></script>
+<script src="~/Scripts/gpaMain.js"></script>
+}
